@@ -15,12 +15,16 @@ from serpapi import GoogleSearch
 yesterday = datetime.now() - timedelta(days = 1)
 ######################################################### Config file 
 # objet de config
-config = configparser.ConfigParser()
+#config = configparser.ConfigParser()
 # Lire fichier de config
-config.read('config.txt')
+#config.read('config.txt')
 # Accéder aux API KEYS
-news_api_key = config['NEWSAPI']['api_news_key']
-serapi_api_key = config['SERPAPI']['api_serpAi_key']
+import constants
+
+news_api_key = constants.news_api_key
+#news_api_key = "293c2a95b38e42b3bf43702038d54964"
+serapi_api_key = constants.serapi_api_key
+#serapi_api_key =" b06da861c7f33d66826926723362a10b5483173629a1967d6956169503d43b2a"
 ######################################################### LOGO
 logo = '''                                          
     ___    __                          __     _  
