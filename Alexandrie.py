@@ -103,12 +103,26 @@ def HermesNewsApi(keyword,date):
     resultats = json_response['articles']
      #### Add to rich table  
     for article in resultats:
-        table.add_row("[link="+article['url']+"]"+article['title']+"[/link]" , style="bold green")
-        table.add_row(article['description'])
-        table.add_row(article['author'], style="magenta")
+        #print(article)
+        raw_date_str = article.get('publishedAt', '') or ''
+        #article['publishedAt']
+        title = article.get('title', '') or ''
+        #article['title']
+        description = article.get('description', '') or ''
+        #article['description']
+        author = article.get('author', '') or ''
+        #article['author']
+        link = article.get('url', '') or ''
+        #article['url']
+        fixed_date = datetime.strptime(raw_date_str, '%Y-%m-%dT%H:%M:%SZ')
+        readable_date = fixed_date.strftime('%B %d, %Y at %H:%M:%S')
+        #print("+" + "-" * (width + 2) + "+")
+        table.add_row("[link="+link+"]"+title+"[/link]" , style="bold green")
+        table.add_row(description)
+        table.add_row(readable_date , style="italic green")
+        table.add_row(author, style="magenta")
         table.add_row(' ')
         #table.add_row('-'*70 ,'-' * 30, '-'*70)
-
 ###############
 keyword = input('Entrez le keyword : ')
 date    = yesterday.strftime("%y%m%d")
