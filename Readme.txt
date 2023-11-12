@@ -1,4 +1,4 @@
-PROJET Alexandrie -------------> Heritée du Projet_Hermes_Me_V3
+PROJET Alexandrie -------------> Heritée du Projet_Hermes_Me_V3 by Sweetkoffi and J-devx
 
     ## Config.txt ( gitignore ) -------------> stock API key 
 

@@ -15,12 +15,14 @@ from serpapi import GoogleSearch
 yesterday = datetime.now() - timedelta(days = 1)
 ######################################################### Config file 
 # objet de config
-config = configparser.ConfigParser()
+#config = configparser.ConfigParser()
 # Lire fichier de config
-config.read('config.txt')
+#config.read('config.txt')
 # Accéder aux API KEYS
-news_api_key = config['NEWSAPI']['api_news_key']
-serapi_api_key = config['SERPAPI']['api_serpAi_key']
+import constants
+
+news_api_key = constants.news_api_key
+serapi_api_key = constants.serapi_api_key
 ######################################################### LOGO
 logo = '''                                          
     ___    __                          __     _  
@@ -52,9 +54,9 @@ def print_logo():
 ######################################################### Rich Table
 console = Console()
 table = Table(title="Alexandrie by SweetKoffi")
-table.add_column("Title", justify="left",width=70, style="cyan", no_wrap=True)
-table.add_column("Author",width=30, style="magenta")
-table.add_column("URL",width=70, justify="left", style="green")
+table.add_column("Results", justify="left",width=70, style="cyan")
+'''table.add_column("Author",width=30, style="magenta")
+table.add_column("URL",width=70, justify="left", style="green")'''
 ########################################################## Option 1
 #def ScholarGoogle(): 
     #parser = CustomGoogleScholarProfiles()
@@ -84,8 +86,9 @@ def ScholarGoogle (keyword_search_google):
     #### Add to rich table 
     for article in organic_resultats_json:
         infosup = article['publication_info']
-        table.add_row(article['title'],infosup['summary'],article['link'])
-        table.add_row('-'*70 ,'-' * 30, '-'*70)
+        table.add_row("[link="+article['link']+"]"+article['title']+"[/link]",style="bold green")
+        table.add_row(infosup['summary'])
+        table.add_row(' ')
 #########################################################  Fonction HermesNewsApi
 def HermesNewsApi(keyword,date):
     base_url = 'https://newsapi.org/v2/everything?'
@@ -93,14 +96,18 @@ def HermesNewsApi(keyword,date):
     api_key = news_api_key
     #print(api_key)
     url = f"{base_url}q={keyword}&from={date}&sortBy={sort_by}&apiKey={api_key}"
+    #print(url)
     response = requests.get(url)
     #json_response = json.dumps(response)
     json_response = response.json()
     resultats = json_response['articles']
      #### Add to rich table  
     for article in resultats:
-        table.add_row(article['title'],article['author'],article['url'])
-        table.add_row('-'*70 ,'-' * 30, '-'*70)
+        table.add_row("[link="+article['url']+"]"+article['title']+"[/link]" , style="bold green")
+        table.add_row(article['description'])
+        table.add_row(article['author'], style="magenta")
+        table.add_row(' ')
+        #table.add_row('-'*70 ,'-' * 30, '-'*70)
 
 ###############
 keyword = input('Entrez le keyword : ')
